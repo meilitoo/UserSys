@@ -1,0 +1,44 @@
+﻿@model MenuListViewModel
+
+<h2>菜单列表</h2>
+
+<p>
+    <a asp-action="AddParentMenu">添加父菜单</a>|<a asp-action="AddMenu">添加子菜单</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>菜单编号</th>
+            <th>菜单名</th>
+            <th>父级菜单</th>
+            <th>控制器|动作</th>
+            <th>菜单类型</th>
+            <th>备注</th>
+            <th>排序号</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MenuList)
+        {
+            string menuType = item.IsDisplay ? "显示菜单" : "操作菜单";
+            if (item.MenuPId == 0) { menuType = "显示菜单"; }
+
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.MenuId)</td>
+                <td>@Html.DisplayFor(modelItem => item.MenuName)</td>
+                <td>@Model.GetMenuNameByPId(item.MenuPId)</td>
+                <td>@Html.DisplayFor(modelItem => item.ControllerName)|@Html.DisplayFor(modelItem => item.ActionName)</td>
+                <td>@menuType</td>
+                <td>@Html.DisplayFor(modelItem => item.MenuMemo)</td>
+                <td>@Html.DisplayFor(modelItem => item.OrderId)</td>
+
+                <td>
+                    @Html.ActionLink("编辑", "EditMenu", new { menuid = item.MenuId }) |
+                    @Html.ActionLink("删除", "Delete", new { menuid = item.MenuId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@await Component.InvokeAsync("Pagination", Model.PageInfo)

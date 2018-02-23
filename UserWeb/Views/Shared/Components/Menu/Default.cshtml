@@ -1,0 +1,32 @@
+﻿@model MenuSidebarViewModel
+
+<ul class="sidebar-menu">
+    <li class="header">菜单列表</li>
+    @foreach (var item in Model.UserMenuTree)
+    {
+        <li class="treeview">
+            <a href="#"><span>@item.ParentMenu.MenuName</span> <i class="fa fa-circle-o"></i></a>
+            <ul class="treeview-menu menu-open show">
+                @foreach (var subItem in item.SubMenus)
+                {
+                    if (subItem.MenuId == Model.SelectedMenuId)
+                    {
+
+                <li class="active">@Html.ActionLink(subItem.MenuName, subItem.ActionName, subItem.ControllerName)</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink(subItem.MenuName,subItem.ActionName,subItem.ControllerName)</li>
+
+                    }
+
+                }
+
+
+            </ul>
+        </li>
+
+    }
+   
+
+</ul><!-- /.sidebar-menu -->

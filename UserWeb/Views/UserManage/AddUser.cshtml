@@ -1,0 +1,65 @@
+﻿@model AddUserViewModel
+@{
+    string actionName = "AddUser";
+    string btnName = "添加";
+}
+@if (Model.IsEdit)
+{
+    <h4>编辑用户</h4>
+
+    actionName = "Edit";
+    btnName = "编辑";
+}
+else
+{
+    <h4>添加用户</h4>
+
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="@actionName">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (Model.IsEdit)
+    {
+        <input asp-for="UserId" type="hidden" />
+        <div class="form-group">
+            <label asp-for="LoginName" class="control-label">登录名</label>
+            <input asp-for="LoginName" class="form-control" disabled />
+            <span asp-validation-for="LoginName" class="text-danger"></span>
+        </div>
+}
+else
+{
+        <div class="form-group">
+            <label asp-for="LoginName" class="control-label">登录名</label>
+            <input asp-for="LoginName" class="form-control" />
+            <span asp-validation-for="LoginName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LoginPwd" class="control-label">密码</label>
+            <input asp-for="LoginPwd" class="form-control" />
+            <span asp-validation-for="LoginPwd" class="text-danger"></span>
+        </div>
+}
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label">姓名</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AllRoleList" class="control-label">用户角色</label>
+                <p><checkBoxList id="role" name="roleid" items="Model.GetCheckBoxItem()"></checkBoxList></p>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@btnName" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="UserList">返回列表</a>
+</div>
+

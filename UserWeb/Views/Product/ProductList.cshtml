@@ -1,0 +1,35 @@
+﻿@model UserWeb.Models.ProductListViewModel
+
+<h2>产品列表</h2>
+
+<p>
+    <a asp-action="AddProduct">添加产品</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>产品名称</th>
+            <th>产品描述</th>
+            <th>创建人</th>
+            <th>创建时间</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ProductList) {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.ProductId)</td>
+            <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+            <td>@Html.DisplayFor(modelItem => item.ProductDes)</td>
+            <td>@Html.DisplayFor(modelItem => item.Creator.UserName)</td>
+            <td>@Html.DisplayFor(modelItem => item.CreateTime)</td>
+            <td>
+                @Html.ActionLink("编辑产品", "EditProduct", new { pid=item.ProductId }) |
+                @Html.ActionLink("删除产品", "DelProduct", new { pid = item.ProductId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@await Component.InvokeAsync("Pagination", Model.PageInfo)

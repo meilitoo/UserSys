@@ -1,0 +1,51 @@
+﻿@model UserListViewModel
+
+<h2>用户列表</h2>
+
+<p>
+    <a asp-action="AddUser">添加用户</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                用户编号
+            </th>
+            <th>
+                登录名
+            </th>
+            <th>
+                姓名
+            </th>
+            <th>角色</th>
+            <th>
+                创建时间
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserList)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoginName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>@Model.GetUserRoleStr(item.UserId)</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-userid="@item.UserId">编辑</a> |
+                <a asp-action="Delete" asp-route-userid="@item.UserId">删除</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

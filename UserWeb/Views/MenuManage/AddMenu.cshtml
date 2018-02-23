@@ -1,0 +1,122 @@
+﻿@model UserWeb.Models.AddMenuViewModel
+@{
+    string actionName = "AddMenu";
+    string btnName = "添加";
+}
+@if (Model.IsEdit)
+{
+    <h2>编辑菜单</h2>
+
+    actionName = "EditMenu";
+    btnName = "编辑";
+}
+else
+{
+    <h2>添加菜单</h2>
+
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="@actionName">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.IsEdit)
+    {
+        <input asp-for="MenuId" type="hidden" />
+}
+
+            <div class="form-group">
+                <label asp-for="MenuName" class="control-label">菜单名</label>
+                <input asp-for="MenuName" class="form-control" />
+                <span asp-validation-for="MenuName" class="text-danger"></span>
+            </div>
+            @if (!Model.IsParentMenu)
+    {
+        <div class="form-group">
+
+            <label asp-for="ControllerName" class="control-label">控制器</label>
+            <select asp-for="ControllerName" asp-items="Model.ControllerList" class="form-control"></select>
+            <span asp-validation-for="ControllerName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ActionName" class="control-label">功能</label>
+            <select asp-for="ActionName" class="form-control"></select>
+            <span asp-validation-for="ActionName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="IsDisplay" />显示为菜单项
+                </label>
+            </div>
+        </div>
+}
+            <div class="form-group">
+                <label asp-for="MenuMemo" class="control-label">菜单说明</label>
+                <input asp-for="MenuMemo" class="form-control" />
+                <span asp-validation-for="MenuMemo" class="text-danger"></span>
+            </div>
+            @if (Model.IsParentMenu)
+    {
+
+        <input asp-for="MenuPId" type="hidden" value="0" />
+}
+else
+{
+        <div class="form-group">
+            <label asp-for="MenuPId" class="control-label">父菜单</label>
+            <select asp-for="MenuPId" asp-items="Model.ParentMenuList" class="form-control"></select>
+            <span asp-validation-for="MenuPId" class="text-danger"></span>
+        </div>
+
+}
+            <div class="form-group">
+                <label asp-for="OrderId" class="control-label">排序号</label>
+                <input asp-for="OrderId" class="form-control" />
+                <span asp-validation-for="OrderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@btnName" class="btn btn-default" />
+            </div>
+        </form>
+        
+    </div>
+</div>
+
+<div>
+    <a asp-action="MenuList">返回列表</a>
+</div>
+@section Scripts{
+<script type="text/javascript">
+        $(function () {
+            var first = true;
+            $("#ControllerName").change(function () {
+                $("#ActionName").empty();
+                $.getJSON("/menumanage/GetActionList", { "controllerName": $(this).val() }, function (res) {
+
+                    $(res).each(function (i) {
+                        $("#ActionName").append("<option value='" + res[i] + "'>" + res[i] + "</option>");
+
+                    });
+                    if (first) {
+                        first = false;
+                          @if (Model.IsEdit)
+            {
+                @:$("#ActionName").val("@Model.ActionName");
+            }
+                    }
+
+
+                });
+
+            });
+
+            $("#ControllerName").change();
+
+
+
+        });
+</script>
+
+}

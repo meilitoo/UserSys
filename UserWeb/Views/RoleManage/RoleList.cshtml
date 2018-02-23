@@ -1,0 +1,34 @@
+﻿@model UserWeb.Models.RoleListViewModel
+
+<h2>角色列表</h2>
+
+<p>
+    <a asp-action="AddRole">新增角色</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>备注</th>
+            <th>角色内容</th>
+            <th>创建日期</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.RoleInfoList) {
+        <tr>
+            <td>@item.RoleId</td>
+            <td>@item.RoleName</td>
+            <td>@item.RoleMemo</td>
+            <td>@Model.GetRoleMenuStr(item.RoleId)</td>
+            <td>@item.CreateTime</td>
+            <td>
+                @Html.ActionLink("编辑", "EditRole", new {  roleid =item.RoleId }) |
+                @Html.ActionLink("删除", "Delete", new {  roleid=item.RoleId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

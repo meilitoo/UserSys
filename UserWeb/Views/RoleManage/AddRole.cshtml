@@ -1,0 +1,66 @@
+﻿@model AddRoleViewModel
+@{
+    string actionName = "AddRole";
+    string btnName = "添加";
+    string subMenuId = "subMenu";
+    int subMenuCount = 0;
+}
+@if (Model.IsEdit)
+{
+    <h2>编辑角色</h2>
+
+    actionName = "EditRole";
+    btnName = "编辑";
+}
+else
+{
+    <h2>新增角色</h2>
+
+}
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="@actionName">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RoleInfo.RoleName" class="control-label">角色名</label>
+                <input asp-for="RoleInfo.RoleName" class="form-control"  name="RoleName"/>
+                <span asp-validation-for="RoleInfo.RoleName" class="text-danger"></span>
+            </div>
+            @if (Model.IsEdit)
+            {
+                <input asp-for="RoleInfo.RoleId" name="RoleId" type="hidden" />
+            }
+            <div class="form-group">
+                <label asp-for="MenuList">菜单权限</label>
+                @foreach(var menuItem in Model.MenuList)
+                {
+                    if (menuItem.SubMenus.Count > 0)
+                    {
+                        subMenuId = "subMenu" + subMenuCount;
+                        <p>@menuItem.ParentMenu.MenuName</p>
+                        <p><checkBoxList id="@subMenuId" items="@Model.GetCheckBoxItem(menuItem.SubMenus)" name="subMenu"></checkBoxList></p>
+                        subMenuCount++;
+                    }
+
+                }
+
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleInfo.RoleMemo" class="control-label">角色说明</label>
+                <input asp-for="RoleInfo.RoleMemo" class="form-control" name="RoleMemo" />
+                <span asp-validation-for="RoleInfo.RoleMemo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@btnName" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="RoleList">返回列表</a>
+</div>
+
+
+

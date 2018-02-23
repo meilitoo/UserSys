@@ -1,0 +1,107 @@
+﻿@model Pagination
+@if (Model.RecordCount > Model.PageSize)
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (Model.PageIndex > 0)
+            {
+                <li>
+                    <a href="@Url.PageUrl(Model.PageIndex-1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+            }
+            else
+            {
+                <li class="disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                    </span>
+                </li>
+
+            }
+            @{
+                int start = Model.PageIndex - 3;
+                int end = Model.PageIndex + 3;
+                int curPageNum = Model.PageIndex + 1;
+                if (start < 1)
+                {
+                    start = 1;
+
+                }
+                if (end > Model.PageCount)
+                {
+                    end = Model.PageCount;
+
+                }
+                if (Model.PageCount < 11)
+                {
+                    start = 1;
+                    end = Model.PageCount;
+                }
+                else
+                {
+                    if (start > 1)
+                    {
+                        <li class="disabled">
+                            <span>
+                                <span aria-hidden="true">…</span>
+                            </span>
+                        </li>
+
+                    }
+
+                }
+
+                for (int pageNum = start; pageNum <= end; pageNum++)
+                {
+                    if (pageNum == curPageNum)
+                    {
+                        <li class="active"><span>@pageNum<span class="sr-only">(current)</span></span></li>
+
+                    }
+                    else
+                    {
+                        <li><a href="@Url.PageUrl(pageNum-1)">@pageNum</a></li>
+
+                    }
+
+                }
+
+                if (end < Model.PageCount-1)
+                {
+
+                    <li class="disabled">
+                        <span>
+                            <span aria-hidden="true">…</span>
+                        </span>
+                    </li>
+                }
+                @if (Model.PageIndex < Model.PageCount - 1)
+                {
+                    <li>
+                        <a href="@Url.PageUrl(Model.PageIndex+1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+
+                }
+                else
+                {
+                    <li class="disabled">
+                        <span>
+                            <span aria-hidden="true">&raquo;</span>
+                        </span>
+                    </li>
+
+                }
+            }
+
+
+
+       
+        </ul>
+    </nav>
+
+}
