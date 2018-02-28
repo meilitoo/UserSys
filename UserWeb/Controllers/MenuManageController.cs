@@ -97,6 +97,7 @@ namespace UserWeb.Controllers
             _MenuService.DelMenu(menuId);
             return RedirectToAction("MenuList");
         }
+
         public IActionResult GetActionList(string controllerName)
         {
             string fullName = "UserWeb.Controllers." + controllerName + "Controller";
