@@ -63,14 +63,11 @@ namespace UserSysCore.Service
             else
             {
                 paraStr = "in(";
-                foreach (int id in roleId)
-                {
-                    paraStr += id + ",";
-                }
-                paraStr = paraStr.TrimEnd(',') + ")";
+                
+                paraStr = string.Join(',', roleId) + ")";
             }
 
-            return GetFromSql(@"select * from menu where menuid in(select menuid from RoleToMenu where roleid " + paraStr + ")");
+            return GetFromSql(@"select * from Menu where menuid in(select menuid from RoleToMenu where roleid " + paraStr + ")");
           
            
         }
