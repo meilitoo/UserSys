@@ -56,6 +56,7 @@ namespace UserSysCore.Service
         {
             RoleInfo newModel = Get(model.RoleId);
             newModel.RoleName = model.RoleName;
+            newModel.RoleMemo = model.RoleMemo;
             BeginTransaction(() => {
                 DbContext.RoleInfos.Update(newModel);
                 DbContext.RoleToMenus.RemoveRange(DbContext.RoleToMenus.Where(p => p.RoleId == model.RoleId));

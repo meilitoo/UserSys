@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWeb", "UserWeb\UserWeb.csproj", "{0C1B0FC8-E45D-4ECE-9083-7831DA62130D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserSysCore", "UserSysCore\UserSysCore.csproj", "{7D6BA37D-08CA-4516-A405-00202657C7E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserSysCore", "UserSysCore\UserSysCore.csproj", "{7D6BA37D-08CA-4516-A405-00202657C7E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
